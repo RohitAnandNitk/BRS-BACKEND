@@ -3,7 +3,8 @@ const Router = express.Router();
 const Bicycle = require('./../models/bicycle');
 const User = require('./../models/user');
 
-const { addLocation } = require('./../locationManager'); // Import addLocation function
+// importing locaion manager for adding 
+const { addLocation , removeLocation} = require('./../locationManager'); // Import addLocation function
 
 const passport = require('./../auth');
 // import jwt file
@@ -34,14 +35,10 @@ const checkAdminRole = async (userID) => {
 // Note:  apply jwtAuthMiddlewarev to all methods
 
 //****************************** */ adding bicycle **************************************************
-Router.post('/add' , jwtAuthMiddleware ,async (req, res) =>{
+Router.post('/add' ,async (req, res) =>{
 
   try{
-    // check for admin
-    if( ! await checkAdminRole(req.user.id)){
-      console.log(req.user.role);
-      return res.status(403).json({message : 'User has not Admin Role'});
-    }
+    
     const data = req.body // assuming the request body contain the bicycle data
     // create a new Bicycle document using the mongoose model
     const newBicycle  = new Bicycle(data);
@@ -120,6 +117,9 @@ Router.delete('/:bicycleId' , jwtAuthMiddleware,  async (req, res) => {
           return res.status(404).json({error : 'Bicycle not found'});
       }
 
+      // remove location from locationArray....................
+      removeLocation(bicycleID.location);
+      
       console.log('Bicycle data deleted');
       res.status(200).json({message : 'Data deleted Sucessfully'});
   }

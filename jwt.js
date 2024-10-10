@@ -24,7 +24,7 @@ const jwtAuthMiddleware = (req,res,next) =>{
 // function to generate the  jwt token
 const generateToken =  (userData) => {
     // Generate the new JWT token using user data 
-    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '1h'}); // token expire time is 60 second
+    return jwt.sign(userData, process.env.JWT_SECRET, {expiresIn: '24h'}); // token expire time is 60 second
     /*
        means after 60 second of singup token will expire then that token has no use
        so then again i have to generate the token.

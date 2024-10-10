@@ -10,4 +10,10 @@ const isValidLocation = (location) => {
     return locationArray.includes(location);
 };
 
-module.exports = { addLocation, isValidLocation, locationArray };
+const removeLocation = (location) => {
+    const index = locationArray.indexOf(location);
+    if (index !== -1) {
+        locationArray.splice(index, 1); // Remove the location
+    }
+};
+module.exports = { addLocation, isValidLocation, locationArray , removeLocation};

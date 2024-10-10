@@ -1,0 +1,3 @@
+#hide sensative info
+/node_modules
+.env
