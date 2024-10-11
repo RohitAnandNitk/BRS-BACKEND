@@ -44,8 +44,8 @@ app.use('/admin' , adminRoutes);
 const bookingRoutes = require('./routes/bookingRoutes');
 app.use('/booking' , bookingRoutes);
 
-// for valid location
-const locationRoutes = require('./routes/validLocation');
+// for locations
+const locationRoutes = require('./routes/locationRoutes');
 app.use('/locations', locationRoutes);
 
 
