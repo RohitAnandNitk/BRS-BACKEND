@@ -120,12 +120,13 @@ Router.put('/return', jwtAuthMiddleware,async (req, res) => {
 
 /******************************************  geting all booked details ************************************************/
 Router.get('/' , jwtAuthMiddleware, async (req, res) =>{
+
   console.log("Enter for getting  specific user booking route"); 
-  const userId = req.user._id; // From the JWT token
+  const userId = req.user.id; // From the JWT token
   console.log("from backed user_id : " ,userId);
   try{
 
-      const data = await Booking.find({user : userId }).populate('bicycleId');
+      const data = await Booking.find({userId}).populate('bicycleId');
       console.log("data fetched");
       console.log(data);
 

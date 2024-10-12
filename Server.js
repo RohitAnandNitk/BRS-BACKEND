@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 // let's hanle cors ..........
 
 const corsOption = {
-    origin : "http://localhost:3000",
+    origin :["http://localhost:3000", "https://brs-frontend-fsj9.vercel.app"],
     methods : "GET , POST , PUT , DELETE",
     credentials : true
 }
