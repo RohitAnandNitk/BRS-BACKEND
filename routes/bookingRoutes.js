@@ -39,12 +39,14 @@ Router.post('/book', jwtAuthMiddleware, async (req, res) => {
 
     // Calculate the time difference in milliseconds
     const timeDiffInMs = returnDateTime - bookingDateTime;
-
     // Convert the time difference to hours
-    const hoursBooked = timeDiffInMs / (1000 * 60 * 60); // 1 hour = 1000 ms * 60 s * 60 min
-
+    const hoursBooked =( timeDiffInMs / (1000 * 60 * 60)) / 24 ; 
+    console.log( `booked for ${ hoursBooked} days`);
     // Calculate the total cost based on the number of hours
-    const totalCost = bicycle.rent * hoursBooked;
+    let totalCost = bicycle.rent;
+    if(hoursBooked){
+      totalCost =  bicycle.rent * hoursBooked;
+    }
 
     // Create a new booking
     const newBooking = new Booking({
@@ -128,7 +130,7 @@ Router.get('/' , jwtAuthMiddleware, async (req, res) =>{
 
       const data = await Booking.find({userId}).populate('bicycleId');
       console.log("data fetched");
-      console.log(data);
+     // console.log(data);
 
       res.status(200).json(data);
   }
