@@ -29,8 +29,8 @@ Router.post('/payment', async (req, res) => {
         },
       ],
       mode: 'payment',
-      success_url: `http://localhost:3000/payment-success/${bicycleId}`,  // Use bicycleId in URLs
-      cancel_url: `http://localhost:3000/payment-failed/${bicycleId}`,
+      success_url: `https://brs-frontend-fsj9.vercel.app/payment-success/${bicycleId}`,  // Use bicycleId in URLs
+      cancel_url: `https://brs-frontend-fsj9.vercel.app/payment-failed/${bicycleId}`,
     });
 
     res.json({ id: session.id });
