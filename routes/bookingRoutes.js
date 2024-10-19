@@ -13,7 +13,7 @@ const {jwtAuthMiddleware, generateToken } = require( './../jwt');
 Router.post('/book', jwtAuthMiddleware, async (req, res) => {
   console.log("Request received for booking");
 
-  const { bicycleId, bookingDate, returnDate } = req.body; // User sends these in the request
+  const { bicycleId, bookingDate, returnDate , totalCost } = req.body; // User sends these in the request
   const userId = req.user.id; // From the JWT token
 
   console.log("User ID:", userId);
@@ -37,24 +37,13 @@ Router.post('/book', jwtAuthMiddleware, async (req, res) => {
 
     console.log("Bicycle is available");
 
-    // Calculate the time difference in milliseconds
-    const timeDiffInMs = returnDateTime - bookingDateTime;
-    // Convert the time difference to hours
-    const hoursBooked =( timeDiffInMs / (1000 * 60 * 60)) / 24 ; 
-    console.log( `booked for ${ hoursBooked} days`);
-    // Calculate the total cost based on the number of hours
-    let totalCost = bicycle.rent;
-    if(hoursBooked){
-      totalCost =  bicycle.rent * hoursBooked;
-    }
-
     // Create a new booking
     const newBooking = new Booking({
       userId,
       bicycleId,
-      bookingDate: bookingDateTime,
-      returnDate: returnDateTime,
-      totalCost: totalCost.toFixed(2),  // Save cost with two decimal places
+      bookingDate,
+      returnDate,
+      totalCost,
       status: 'ongoing',
     });
 
@@ -65,7 +54,8 @@ Router.post('/book', jwtAuthMiddleware, async (req, res) => {
     await bicycle.save();
 
     console.log("Booking Confirmed");
-    res.status(200).json({ message: 'Booking confirmed', booking: newBooking });
+    console.log("booking id is :" , newBooking._id); // this is object we have to convert it into string
+    res.status(200).json(newBooking._id.toString());
   } catch (err) {
     console.error("Error occurred during booking:", err);
     res.status(500).json({ error: 'Internal server error' });

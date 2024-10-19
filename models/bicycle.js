@@ -7,6 +7,7 @@ const BicycleSchema = new mongoose.Schema({
   },
   location: {
     type: String,
+    required : true
   },
   rent: {
     type: Number,

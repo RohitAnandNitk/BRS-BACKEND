@@ -48,6 +48,10 @@ app.use('/booking' , bookingRoutes);
 const locationRoutes = require('./routes/locationRoutes');
 app.use('/locations', locationRoutes);
 
+// for payments
+const paymentRoutes = require('./routes/paymentRoutes');
+app.use('/', paymentRoutes);
+
 
 app.listen(PORT , () => {
     console.log('listening on port 4000');

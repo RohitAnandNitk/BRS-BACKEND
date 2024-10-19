@@ -10,7 +10,8 @@
     "loadsh": "^0.0.4",
     "mongoose": "^8.7.0",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "stripe": "^17.2.0"
   },
   "name": "backend",
   "version": "1.0.0",
