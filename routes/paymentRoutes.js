@@ -21,7 +21,7 @@ Router.post('/payment', async (req, res) => {
           price_data: {
             currency: 'inr',
             product_data: {
-              name: `Bicycle Booking #${bicycleId}`,  // Use bicycleId in the description
+              name: "Total Cost : ",  // Use bicycleId in the description
             },
             unit_amount: totalCost * 100, // Amount in cents/paisa
           },
@@ -29,8 +29,14 @@ Router.post('/payment', async (req, res) => {
         },
       ],
       mode: 'payment',
+
+      // for deployment
       success_url: `https://brs-frontend-fsj9.vercel.app/payment-success/${bicycleId}`,  // Use bicycleId in URLs
       cancel_url: `https://brs-frontend-fsj9.vercel.app/payment-failed/${bicycleId}`,
+      
+      // for local 
+    //  success_url: `http://localhost:3000/payment-success/${bicycleId}`,  // Use bicycleId in URLs
+    //  cancel_url: `http://localhost:3000/payment-falied/${bicycleId}`,
     });
 
     res.json({ id: session.id });

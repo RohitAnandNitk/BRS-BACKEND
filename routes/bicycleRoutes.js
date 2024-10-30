@@ -136,11 +136,11 @@ Router.get('/' , async (req, res) => {
     const data  = await Bicycle.find();
     console.log(' Bicycle data fetched');
     res.status(200).json(data);
-}
-catch(err){
+  }
+  catch(err){
   console.log(err);
   res.status(500).json({error:'Internal server Error'});
-} 
+  }  
 });
 
 ///******************************************  find cycle by id **************************************************** */

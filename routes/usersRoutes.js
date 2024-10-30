@@ -56,6 +56,7 @@ Router.post('/login' , async (req, res) =>{
 
       // if user not exist with that username  or password doesn't match
       if(!user || !(await user.comparePassword(password))){
+            console.log("Invalid Email or Password");
             return res.status(401).json({error: 'Invalid Email or Password'});
       }
 

@@ -3,10 +3,40 @@ const mongoose = require('mongoose');
 const Router = express.Router();
 const Booking = require('./../models/booking');
 const Bicycle = require('./../models/bicycle');
+const User = require('./../models/user');
 const { isValidLocation , locationArray } = require('./../locationManager'); // Import isValidLocation function
 
 // import jwt file
 const {jwtAuthMiddleware, generateToken } = require( './../jwt');
+
+
+
+/************************************** Getting all booking history ******************************************/
+Router.get('/history', jwtAuthMiddleware, async (req, res) => {
+  console.log("Entered the all booking history route");
+  const userId = req.user.id; // Extracted from JWT token
+  console.log("User ID is:", userId);
+  
+  try {
+    // // Optionally, ensure that only admins can access this route
+    // if (req.user.role !== 'admin') {
+    //   return res.status(403).json({ message: 'Access forbidden: Admins only' });
+    // }
+
+    // Fetch all booking details (this fetches all bookings for admins) 
+    const data = await Booking.find().populate({
+      path: 'userId',
+      select: 'name , email' // Only select the 'name' field from User
+    });
+
+    console.log('All booking details fetched');
+    return res.status(200).json(data);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 //********************************** book  bicycle ************************************** */
 
@@ -110,7 +140,7 @@ Router.put('/return', jwtAuthMiddleware,async (req, res) => {
   }
 });
 
-/******************************************  geting all booked details ************************************************/
+/******************************************  geting all booked details for a particular user ************************************************/
 Router.get('/' , jwtAuthMiddleware, async (req, res) =>{
 
   console.log("Enter for getting  specific user booking route"); 
@@ -134,6 +164,7 @@ Router.get('/' , jwtAuthMiddleware, async (req, res) =>{
 /**************************************** getting specific booking  details ***********************************************/
 
 Router.get('/:bookingId', jwtAuthMiddleware, async (req, res) => {
+  console.log("Enter in getting specific booking  details routes");
   const { bookingId } = req.params;
   
   if (!bookingId) {
@@ -158,7 +189,6 @@ Router.get('/:bookingId', jwtAuthMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
-
 
 
 
