@@ -62,6 +62,7 @@ Router.post('/book', jwtAuthMiddleware, async (req, res) => {
     // Check if the bicycle is available
     const bicycle = await Bicycle.findById(bicycleId);
     if (bicycle.status !== 'available') {
+      console.log("Bicucle is not available");
       return res.status(400).json({ message: 'Bicycle is not available' });
     }
 
